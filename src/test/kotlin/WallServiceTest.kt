@@ -21,6 +21,7 @@ class WallServiceTest {
             20222610,
             false,
             "Text Sample",
+            reposts = Reposts(3, true),
             views = 0,
             likes = 0
         )
@@ -30,25 +31,69 @@ class WallServiceTest {
     }
 
     @Test
-    fun update_PostExist(){
-        val post = Post(1,9923,9923,9923,20222610,false,"Text Sample",views = 0, likes = 0)
+    fun update_PostExist() {
+        val post = Post(
+            1,
+            9923,
+            9923,
+            9923,
+            20222610,
+            false,
+            "Text Sample",
+            reposts = Reposts(3, true),
+            views = 0,
+            likes = 0
+        )
         WallService.add(post)
-        val updatedPost = Post(post.id,9923,9923,9923,20222810,false,"Updated Text",views = 0, likes = 0)
+        val updatedPost = Post(
+            post.id,
+            9923,
+            9923,
+            9923,
+            20222810,
+            false,
+            "Updated Text",
+            reposts = Reposts(5, true),
+            views = 0,
+            likes = 0
+        )
 
         val result = WallService.update(updatedPost)
 
-        assertEquals(true,result)
+        assertEquals(true, result)
     }
 
     @Test
-    fun update_PostDoNotExist(){
-        val post = Post(1,9923,9923,9923,20222610,false,"Text Sample",views = 0, likes = 0)
+    fun update_PostDoNotExist() {
+        val post = Post(
+            1,
+            9923,
+            9923,
+            9923,
+            20222610,
+            false,
+            "Text Sample",
+            reposts = Reposts(3, true),
+            views = 0,
+            likes = 0
+        )
         WallService.add(post)
-        val updatedPost = Post(19,9923,9923,9923,20222810,false,"Updated Text",views = 0, likes = 0)
+        val updatedPost = Post(
+            19,
+            9923,
+            9923,
+            9923,
+            20222810,
+            false,
+            "Updated Text",
+            reposts = Reposts(3, true),
+            views = 0,
+            likes = 0
+        )
 
         val result = WallService.update(updatedPost)
 
-        assertNotEquals(true,result)
+        assertNotEquals(true, result)
     }
 
 }
