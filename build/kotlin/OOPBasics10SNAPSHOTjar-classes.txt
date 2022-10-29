@@ -1,0 +1,1 @@
+D:\IntProjects\OOPBasics\build\classes\kotlin\main\MainKt.class;D:\IntProjects\OOPBasics\build\classes\kotlin\main\Post.class;D:\IntProjects\OOPBasics\build\classes\kotlin\main\Reposts.class;D:\IntProjects\OOPBasics\build\classes\kotlin\main\WallService.class
