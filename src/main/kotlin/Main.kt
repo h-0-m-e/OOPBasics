@@ -1,32 +1,21 @@
 
-interface Attachment{
-    val type: String
-}
+sealed class Attachment(val type: String)
 
 data class Video(val id: Int, val ownerId: Int, val url: String)
-data class VideoAttachment(val video: Video) : Attachment{
-    override val type = "video"
-}
+data class VideoAttachment(val video: Video) : Attachment("video")
 
 data class Photo(val id: Int, val ownerId: Int, val url: String)
-data class PhotoAttachment(val photo: Photo) : Attachment{
-    override val type = "photo"
-}
+data class PhotoAttachment(val photo: Photo) : Attachment("photo")
 
 data class Audio(val id: Int, val ownerId: Int, val url: String)
-data class AudioAttachment(val audio: Audio) : Attachment{
-    override val type = "audio"
-}
+data class AudioAttachment(val audio: Audio) : Attachment("audio")
+
 
 data class Graffiti(val id: Int, val ownerId: Int, val url: String)
-data class GraffitiAttachment(val graffiti: Graffiti) : Attachment{
-    override val type = "graffiti"
-}
+data class GraffitiAttachment(val graffiti: Graffiti) : Attachment("graffiti")
 
 data class Sticker(val id: Int, val ownerId: Int, val url: String)
-data class StickerAttachment(val sticker: Sticker) : Attachment{
-    override val type = "sticker"
-}
+data class StickerAttachment(val sticker: Sticker) : Attachment("sticker")
 data class Post(
     val id: Int,
     val ownerId: Int,
@@ -217,10 +206,7 @@ fun main() {
         Geo("Moscow. Red Square.","55.75482 37.62169"),
         arrayOf(
             VideoAttachment(Video(123,1,"link for video")),
-            PhotoAttachment(Photo(123,1,"link for photo")),
-            AudioAttachment(Audio(123,1,"link for audio")),
-            GraffitiAttachment(Graffiti(123,1,"link for graffiti")),
-            StickerAttachment(Sticker(123,1,"link for sticker")))
+            PhotoAttachment(Photo(123,1,"link for photo")))
     )
     WallService.update(newPost)
     WallService.printAll()
