@@ -40,17 +40,17 @@ data class Post(
     val views: Int?,
     val likes: Int?,
     val reposts: Reposts,
-    val comments: Comments?,
+    var comments: Array<Comment> = emptyArray(),
     val donut: Donut,
     val geo: Geo?,
     val attachments: Array<Attachment> = emptyArray()
 )
-data class Comments(
-    val count: Int,
-    val canUserComment: Boolean,
-    val canGroupsComment: Boolean,
-    val canUserClose: Boolean,
-    val canUserOpen: Boolean
+data class Comment(
+    val id: Int,
+    val fromId: Int,
+    val date: Int,
+    val text: String,
+    val attachments: Array<Attachment> = emptyArray()
 )
 
 data class Copyright(
@@ -73,13 +73,17 @@ data class Reposts(
     val userReposted: Boolean
 )
 
+class PostNotFoundException(message:String): RuntimeException(message)
+
 object WallService {
 
-    private var idCounter = 1
+    private var PostIdCounter = 1
+    private var CommentIdCounter = 1
     private var posts = emptyArray<Post>()
+    private var comments = emptyArray<Comment>()
 
     fun add(post: Post): Post {
-        posts += post.copy(id = idCounter++)
+        posts += post.copy(id = PostIdCounter++)
         return posts.last()
     }
 
@@ -93,57 +97,41 @@ object WallService {
         return false
     }
 
-    fun clear() {
-        posts = emptyArray()
-        idCounter = 1
+    fun createComment(postId: Int, comment: Comment): Comment{
+        for ((index, post) in posts.withIndex()) {
+            if (postId == post.id) {
+                comments += comment.copy(id = CommentIdCounter)
+                posts[index].comments += comment.copy(id = CommentIdCounter++)
+                return comment
+            }
+        }
+        throw PostNotFoundException("Post with id $postId not found!")
     }
 
-    fun printAll() {
+    fun clear() {
+        posts = emptyArray()
+        comments = emptyArray()
+        PostIdCounter = 1
+        CommentIdCounter = 1
+    }
+
+    fun printAllPosts() {
         for (post in posts) {
             println(post)
+        }
+    }
+
+    fun printAllComments() {
+        for (comment in comments) {
+            println(comment)
         }
     }
 }
 
 fun main() {
-    val post = Post(
-        1,
-        9923,
-        9923,
-        9923,
-        20222610,
-        null,
-        null,
-        null,
-        "post",
-        null,
-        null,
-        true,
-        true,
-        true,
-        false,
-        false,
-        true,
-        false,
-        false,
-        "Hello Moscow!",
-        views = 0,
-        likes = 0,
-        reposts = Reposts(1, true),
-        Comments(2,true,true,true,true),
-        Donut(false,0),
-        Geo("Moscow. Red Square.","55.75482 37.62169"),
-        arrayOf(
-            VideoAttachment(Video(123,1,"link for video")),
-            PhotoAttachment(Photo(123,1,"link for photo")),
-            AudioAttachment(Audio(123,1,"link for audio")),
-            GraffitiAttachment(Graffiti(123,1,"link for graffiti")),
-            StickerAttachment(Sticker(123,1,"link for sticker")))
-    )
-    WallService.add(post)
     WallService.add(
         Post(
-            5,
+            0,
             9923,
             9923,
             9923,
@@ -166,7 +154,7 @@ fun main() {
             views = 0,
             likes = 0,
             reposts = Reposts(1, true),
-            Comments(2,true,true,true,true),
+            comments = emptyArray(),
             Donut(false,0),
             Geo("SPB","55.75482 37.62169"),
             arrayOf(
@@ -176,38 +164,16 @@ fun main() {
                 GraffitiAttachment(Graffiti(123,1,"link for graffiti")))
         )
     )
-    WallService.printAll()
-    val newPost = Post(
+    WallService.createComment(
         1,
-        9923,
-        9923,
-        9923,
-        20222610,
-        null,
-        null,
-        null,
-        "post",
-        null,
-        null,
-        true,
-        true,
-        true,
-        false,
-        false,
-        true,
-        false,
-        false,
-        "Hello Moscow, I love you!",
-        views = 0,
-        likes = 0,
-        reposts = Reposts(1, true),
-        Comments(2,true,true,true,true),
-        Donut(false,0),
-        Geo("Moscow. Red Square.","55.75482 37.62169"),
-        arrayOf(
-            VideoAttachment(Video(123,1,"link for video")),
-            PhotoAttachment(Photo(123,1,"link for photo")))
-    )
-    WallService.update(newPost)
-    WallService.printAll()
+        comment = Comment(
+            0,
+            23,
+            23121999,
+            "Let's walk together!",
+            arrayOf(
+                PhotoAttachment(Photo(234,23,"link for photo"))
+            )))
+    WallService.printAllPosts()
+    WallService.printAllComments()
 }

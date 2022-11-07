@@ -37,7 +37,7 @@ class WallServiceTest {
             views = 0,
             likes = 0,
             reposts = Reposts(1, true),
-            Comments(2,true,true,true,true),
+            comments = emptyArray(),
             Donut(false,0),
             Geo("Moscow. Red Square.","55.75482 37.62169"),
             arrayOf(
@@ -78,7 +78,7 @@ class WallServiceTest {
             views = 0,
             likes = 0,
             reposts = Reposts(1, true),
-            Comments(2,true,true,true,true),
+            comments = emptyArray(),
             Donut(false,0),
             Geo("Moscow. Red Square.","55.75482 37.62169"),
             arrayOf(
@@ -113,7 +113,7 @@ class WallServiceTest {
             views = 0,
             likes = 0,
             reposts = Reposts(1, true),
-            Comments(2,true,true,true,true),
+            comments = emptyArray(),
             Donut(false,0),
             Geo("Moscow. Red Square.","55.75482 37.62169"),
             arrayOf(
@@ -155,7 +155,7 @@ class WallServiceTest {
             views = 0,
             likes = 0,
             reposts = Reposts(1, true),
-            Comments(2,true,true,true,true),
+            comments = emptyArray(),
             Donut(false,0),
             Geo("Moscow. Red Square.","55.75482 37.62169"),
             arrayOf(
@@ -190,7 +190,7 @@ class WallServiceTest {
             views = 0,
             likes = 0,
             reposts = Reposts(1, true),
-            Comments(2,true,true,true,true),
+            comments = emptyArray(),
             Donut(false,0),
             Geo("Moscow. Red Square.","55.75482 37.62169"),
             arrayOf(
