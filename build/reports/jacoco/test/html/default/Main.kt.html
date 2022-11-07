@@ -1,62 +1,180 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Main.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">OOPBasics</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">Main.kt</span></div><h1>Main.kt</h1><pre class="source lang-java linenums">import java.util.Objects
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Main.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">OOPBasics</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">Main.kt</span></div><h1>Main.kt</h1><pre class="source lang-java linenums">
+<span class="pc" id="L2">sealed class Attachment(val type: String)</span>
 
-<span class="fc" id="L3">data class Post(</span>
-<span class="fc" id="L4">    val id: Int,</span>
-<span class="pc" id="L5">    val ownerId: Int,</span>
-<span class="pc" id="L6">    val fromId: Int,</span>
-<span class="pc" id="L7">    val publisherId: Int,</span>
-<span class="pc" id="L8">    val publishDate: Long,</span>
-<span class="pc" id="L9">    val friendsOnly: Boolean,</span>
-<span class="pc" id="L10">    val text: String,</span>
-//    val reposts: Objects,
-<span class="pc" id="L12">    val views: Int,</span>
-<span class="pc" id="L13">    val likes: Int</span>
+<span class="pc" id="L4">data class Video(val id: Int, val ownerId: Int, val url: String)</span>
+<span class="pc" id="L5">data class VideoAttachment(val video: Video) : Attachment(&quot;video&quot;)</span>
+
+<span class="pc" id="L7">data class Photo(val id: Int, val ownerId: Int, val url: String)</span>
+<span class="pc" id="L8">data class PhotoAttachment(val photo: Photo) : Attachment(&quot;photo&quot;)</span>
+
+<span class="pc" id="L10">data class Audio(val id: Int, val ownerId: Int, val url: String)</span>
+<span class="pc" id="L11">data class AudioAttachment(val audio: Audio) : Attachment(&quot;audio&quot;)</span>
+
+
+<span class="pc" id="L14">data class Graffiti(val id: Int, val ownerId: Int, val url: String)</span>
+<span class="pc" id="L15">data class GraffitiAttachment(val graffiti: Graffiti) : Attachment(&quot;graffiti&quot;)</span>
+
+<span class="pc" id="L17">data class Sticker(val id: Int, val ownerId: Int, val url: String)</span>
+<span class="pc" id="L18">data class StickerAttachment(val sticker: Sticker) : Attachment(&quot;sticker&quot;)</span>
+<span class="nc" id="L19">data class Post(</span>
+<span class="nc" id="L20">    val id: Int,</span>
+<span class="nc" id="L21">    val ownerId: Int,</span>
+<span class="nc" id="L22">    val fromId: Int,</span>
+<span class="nc" id="L23">    val publisherId: Int,</span>
+<span class="nc" id="L24">    val publishDate: Long,</span>
+<span class="nc" id="L25">    val replyPostId: Int?,</span>
+<span class="nc" id="L26">    val replyOwnerId: Int?,</span>
+<span class="nc" id="L27">    val copyright: Copyright?,</span>
+<span class="nc" id="L28">    val postType: String,</span>
+<span class="nc" id="L29">    val postSource: Any?,</span>
+<span class="nc" id="L30">    val signerId: Int?,</span>
+<span class="nc" id="L31">    val canPin: Boolean,</span>
+<span class="nc" id="L32">    val canDelete: Boolean,</span>
+<span class="nc" id="L33">    val canEdit: Boolean,</span>
+<span class="nc" id="L34">    val isPinned: Boolean,</span>
+<span class="nc" id="L35">    val markedAsAds: Boolean,</span>
+<span class="nc" id="L36">    val isFavorite: Boolean,</span>
+<span class="nc" id="L37">    val postponed: Boolean,</span>
+<span class="nc" id="L38">    val friendsOnly: Boolean,</span>
+<span class="nc" id="L39">    val text: String,</span>
+<span class="nc" id="L40">    val views: Int?,</span>
+<span class="nc" id="L41">    val likes: Int?,</span>
+<span class="nc" id="L42">    val reposts: Reposts,</span>
+<span class="nc" id="L43">    var comments: Array&lt;Comment&gt; = emptyArray(),</span>
+<span class="nc" id="L44">    val donut: Donut,</span>
+<span class="nc" id="L45">    val geo: Geo?,</span>
+<span class="nc" id="L46">    val attachments: Array&lt;Attachment&gt; = emptyArray()</span>
+<span class="nc" id="L47">)</span>
+<span class="nc" id="L48">data class Comment(</span>
+<span class="nc" id="L49">    val id: Int,</span>
+<span class="nc" id="L50">    val fromId: Int,</span>
+<span class="nc" id="L51">    val date: Int,</span>
+<span class="nc" id="L52">    val text: String,</span>
+<span class="nc" id="L53">    val attachments: Array&lt;Attachment&gt; = emptyArray()</span>
+<span class="nc" id="L54">)</span>
+
+<span class="nc" id="L56">data class Copyright(</span>
+<span class="nc" id="L57">    val id: Int,</span>
+<span class="nc" id="L58">    val link: String,</span>
+<span class="nc" id="L59">    val name: String</span>
 )
 
-<span class="nc" id="L16">data class Reposts(</span>
-<span class="nc" id="L17">    val count: Int,</span>
-<span class="nc" id="L18">    val userReposted: Boolean</span>
+<span class="fc" id="L62">data class Geo(</span>
+<span class="pc" id="L63">    val type: String,</span>
+<span class="pc" id="L64">    val coordinates: String</span>
 )
+
+<span class="fc" id="L67">data class Donut(</span>
+<span class="pc" id="L68">    val isDonut: Boolean,</span>
+<span class="pc" id="L69">    val paidDuration: Int</span>
+)
+<span class="fc" id="L71">data class Reposts(</span>
+<span class="pc" id="L72">    val count: Int,</span>
+<span class="pc" id="L73">    val userReposted: Boolean</span>
+)
+
+<span class="nc" id="L76">class PostNotFoundException(message:String): RuntimeException(message)</span>
 
 object WallService {
 
-<span class="fc" id="L23">    private var idCounter = 1</span>
-<span class="fc" id="L24">    private var posts = emptyArray&lt;Post&gt;()</span>
+<span class="nc" id="L80">    private var PostIdCounter = 1</span>
+<span class="nc" id="L81">    private var CommentIdCounter = 1</span>
+<span class="nc" id="L82">    private var posts = emptyArray&lt;Post&gt;()</span>
+<span class="nc" id="L83">    private var comments = emptyArray&lt;Comment&gt;()</span>
 
-    fun add(post: Post): Post{
-<span class="fc" id="L27">        posts += post.copy(id = idCounter++)</span>
-<span class="fc" id="L28">        return posts.last()</span>
+    fun add(post: Post): Post {
+<span class="nc" id="L86">        posts += post.copy(id = PostIdCounter++)</span>
+<span class="nc" id="L87">        return posts.last()</span>
     }
 
     fun update(updatedPost: Post): Boolean {
-<span class="fc bfc" id="L32" title="All 2 branches covered.">        for((index, post) in posts.withIndex()){</span>
-<span class="fc bfc" id="L33" title="All 2 branches covered.">            if (updatedPost.id == post.id){</span>
-<span class="fc" id="L34">                posts[index] = updatedPost.copy()</span>
-<span class="fc" id="L35">                return true</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        for ((index, post) in posts.withIndex()) {</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">            if (updatedPost.id == post.id) {</span>
+<span class="nc" id="L93">                posts[index] = updatedPost.copy()</span>
+<span class="nc" id="L94">                return true</span>
             }
         }
-<span class="fc" id="L38">        return false</span>
+<span class="nc" id="L97">        return false</span>
     }
 
-    fun clear(){
-<span class="fc" id="L42">        posts = emptyArray()</span>
-<span class="fc" id="L43">        idCounter = 1</span>
-<span class="fc" id="L44">    }</span>
-
-    fun printAll(){
-<span class="nc bnc" id="L47" title="All 2 branches missed.">        for(post in posts){</span>
-<span class="nc" id="L48">            println(post)</span>
+    fun createComment(postId: Int, comment: Comment): Comment{
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        for ((index, post) in posts.withIndex()) {</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">            if (postId == post.id) {</span>
+<span class="nc" id="L103">                comments += comment.copy(id = CommentIdCounter)</span>
+<span class="nc" id="L104">                posts[index].comments += comment.copy(id = CommentIdCounter++)</span>
+<span class="nc" id="L105">                return comment</span>
+            }
         }
-<span class="nc" id="L50">    }</span>
+<span class="nc" id="L108">        throw PostNotFoundException(&quot;Post with id $postId not found!&quot;)</span>
+    }
+
+    fun clear() {
+<span class="nc" id="L112">        posts = emptyArray()</span>
+<span class="nc" id="L113">        comments = emptyArray()</span>
+<span class="nc" id="L114">        PostIdCounter = 1</span>
+<span class="nc" id="L115">        CommentIdCounter = 1</span>
+<span class="nc" id="L116">    }</span>
+
+    fun printAllPosts() {
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        for (post in posts) {</span>
+<span class="nc" id="L120">            println(post)</span>
+        }
+<span class="nc" id="L122">    }</span>
+
+    fun printAllComments() {
+<span class="nc bnc" id="L125" title="All 2 branches missed.">        for (comment in comments) {</span>
+<span class="nc" id="L126">            println(comment)</span>
+        }
+<span class="nc" id="L128">    }</span>
 }
 
 fun main() {
-<span class="nc" id="L54">    val post = Post(1,9923,9923,9923,20222610,false,&quot;Text Sample&quot;,views = 0, likes = 0)</span>
-<span class="nc" id="L55">    WallService.add(post)</span>
-<span class="nc" id="L56">    WallService.add(Post(5,23,12,22,20212109,false,&quot;Nothing to read here&quot;, views = 0, likes = 0))</span>
-<span class="nc" id="L57">    WallService.printAll()</span>
-<span class="nc" id="L58">    val newPost = Post(1,9923,9923,9923,20222610,false,&quot;NEW Text Sample&quot;,views = 0, likes = 0)</span>
-<span class="nc" id="L59">    WallService.update(newPost)</span>
-<span class="nc" id="L60">    WallService.printAll()</span>
-<span class="nc" id="L61">}</span>
+<span class="nc" id="L132">    WallService.add(</span>
+<span class="nc" id="L133">        Post(</span>
+<span class="nc" id="L134">            0,</span>
+<span class="nc" id="L135">            9923,</span>
+<span class="nc" id="L136">            9923,</span>
+<span class="nc" id="L137">            9923,</span>
+<span class="nc" id="L138">            20222610,</span>
+<span class="nc" id="L139">            null,</span>
+<span class="nc" id="L140">            null,</span>
+<span class="nc" id="L141">            null,</span>
+<span class="nc" id="L142">            &quot;post&quot;,</span>
+<span class="nc" id="L143">            null,</span>
+<span class="nc" id="L144">            null,</span>
+<span class="nc" id="L145">            true,</span>
+<span class="nc" id="L146">            true,</span>
+<span class="nc" id="L147">            true,</span>
+<span class="nc" id="L148">            false,</span>
+<span class="nc" id="L149">            false,</span>
+<span class="nc" id="L150">            true,</span>
+<span class="nc" id="L151">            false,</span>
+<span class="nc" id="L152">            false,</span>
+<span class="nc" id="L153">            &quot;Hello SPB!&quot;,</span>
+<span class="nc" id="L154">            views = 0,</span>
+<span class="nc" id="L155">            likes = 0,</span>
+<span class="nc" id="L156">            reposts = Reposts(1, true),</span>
+<span class="nc" id="L157">            comments = emptyArray(),</span>
+<span class="nc" id="L158">            Donut(false,0),</span>
+<span class="nc" id="L159">            Geo(&quot;SPB&quot;,&quot;55.75482 37.62169&quot;),</span>
+            arrayOf(
+<span class="nc" id="L161">                VideoAttachment(Video(123,1,&quot;link for video&quot;)),</span>
+<span class="nc" id="L162">                PhotoAttachment(Photo(123,1,&quot;link for photo&quot;)),</span>
+<span class="nc" id="L163">                AudioAttachment(Audio(123,1,&quot;link for audio&quot;)),</span>
+<span class="nc" id="L164">                GraffitiAttachment(Graffiti(123,1,&quot;link for graffiti&quot;)))</span>
+        )
+    )
+<span class="nc" id="L167">    WallService.createComment(</span>
+<span class="nc" id="L168">        1,</span>
+<span class="nc" id="L169">        comment = Comment(</span>
+<span class="nc" id="L170">            0,</span>
+<span class="nc" id="L171">            23,</span>
+<span class="nc" id="L172">            23121999,</span>
+<span class="nc" id="L173">            &quot;Let's walk together!&quot;,</span>
+            arrayOf(
+<span class="nc" id="L175">                PhotoAttachment(Photo(234,23,&quot;link for photo&quot;))</span>
+            )))
+<span class="nc" id="L177">    WallService.printAllPosts()</span>
+<span class="nc" id="L178">    WallService.printAllComments()</span>
+<span class="nc" id="L179">}</span>
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
