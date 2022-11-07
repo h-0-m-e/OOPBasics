@@ -1,30 +1,89 @@
-import java.util.Objects
 
+sealed class Attachment(val type: String)
+
+data class Video(val id: Int, val ownerId: Int, val url: String)
+data class VideoAttachment(val video: Video) : Attachment("video")
+
+data class Photo(val id: Int, val ownerId: Int, val url: String)
+data class PhotoAttachment(val photo: Photo) : Attachment("photo")
+
+data class Audio(val id: Int, val ownerId: Int, val url: String)
+data class AudioAttachment(val audio: Audio) : Attachment("audio")
+
+
+data class Graffiti(val id: Int, val ownerId: Int, val url: String)
+data class GraffitiAttachment(val graffiti: Graffiti) : Attachment("graffiti")
+
+data class Sticker(val id: Int, val ownerId: Int, val url: String)
+data class StickerAttachment(val sticker: Sticker) : Attachment("sticker")
 data class Post(
     val id: Int,
     val ownerId: Int,
     val fromId: Int,
     val publisherId: Int,
     val publishDate: Long,
+    val replyPostId: Int?,
+    val replyOwnerId: Int?,
+    val copyright: Copyright?,
+    val postType: String,
+    val postSource: Any?,
+    val signerId: Int?,
+    val canPin: Boolean,
+    val canDelete: Boolean,
+    val canEdit: Boolean,
+    val isPinned: Boolean,
+    val markedAsAds: Boolean,
+    val isFavorite: Boolean,
+    val postponed: Boolean,
     val friendsOnly: Boolean,
     val text: String,
+    val views: Int?,
+    val likes: Int?,
     val reposts: Reposts,
-    val views: Int,
-    val likes: Int
+    var comments: Array<Comment> = emptyArray(),
+    val donut: Donut,
+    val geo: Geo?,
+    val attachments: Array<Attachment> = emptyArray()
+)
+data class Comment(
+    val id: Int,
+    val fromId: Int,
+    val date: Int,
+    val text: String,
+    val attachments: Array<Attachment> = emptyArray()
 )
 
+data class Copyright(
+    val id: Int,
+    val link: String,
+    val name: String
+)
+
+data class Geo(
+    val type: String,
+    val coordinates: String
+)
+
+data class Donut(
+    val isDonut: Boolean,
+    val paidDuration: Int
+)
 data class Reposts(
     val count: Int,
     val userReposted: Boolean
 )
 
+class PostNotFoundException(message:String): RuntimeException(message)
+
 object WallService {
 
-    private var idCounter = 1
+    private var PostIdCounter = 1
+    private var CommentIdCounter = 1
     private var posts = emptyArray<Post>()
+    private var comments = emptyArray<Comment>()
 
     fun add(post: Post): Post {
-        posts += post.copy(id = idCounter++)
+        posts += post.copy(id = PostIdCounter++)
         return posts.last()
     }
 
@@ -38,59 +97,83 @@ object WallService {
         return false
     }
 
-    fun clear() {
-        posts = emptyArray()
-        idCounter = 1
+    fun createComment(postId: Int, comment: Comment): Comment{
+        for ((index, post) in posts.withIndex()) {
+            if (postId == post.id) {
+                comments += comment.copy(id = CommentIdCounter)
+                posts[index].comments += comment.copy(id = CommentIdCounter++)
+                return comment
+            }
+        }
+        throw PostNotFoundException("Post with id $postId not found!")
     }
 
-    fun printAll() {
+    fun clear() {
+        posts = emptyArray()
+        comments = emptyArray()
+        PostIdCounter = 1
+        CommentIdCounter = 1
+    }
+
+    fun printAllPosts() {
         for (post in posts) {
             println(post)
+        }
+    }
+
+    fun printAllComments() {
+        for (comment in comments) {
+            println(comment)
         }
     }
 }
 
 fun main() {
-    val post = Post(
-        1,
-        9923,
-        9923,
-        9923,
-        20222610,
-        false,
-        "Text Sample",
-        reposts = Reposts(1, true),
-        views = 0,
-        likes = 0
-    )
-    WallService.add(post)
     WallService.add(
         Post(
-            5,
-            23,
-            12,
-            22,
-            20212109,
+            0,
+            9923,
+            9923,
+            9923,
+            20222610,
+            null,
+            null,
+            null,
+            "post",
+            null,
+            null,
+            true,
+            true,
+            true,
             false,
-            "Nothing to read here",
-            reposts = Reposts(3, true),
+            false,
+            true,
+            false,
+            false,
+            "Hello SPB!",
             views = 0,
-            likes = 0
+            likes = 0,
+            reposts = Reposts(1, true),
+            comments = emptyArray(),
+            Donut(false,0),
+            Geo("SPB","55.75482 37.62169"),
+            arrayOf(
+                VideoAttachment(Video(123,1,"link for video")),
+                PhotoAttachment(Photo(123,1,"link for photo")),
+                AudioAttachment(Audio(123,1,"link for audio")),
+                GraffitiAttachment(Graffiti(123,1,"link for graffiti")))
         )
     )
-    WallService.printAll()
-    val newPost = Post(
+    WallService.createComment(
         1,
-        9923,
-        9923,
-        9923,
-        20222610,
-        false,
-        "NEW Text Sample",
-        reposts = Reposts(0, false),
-        views = 0,
-        likes = 0
-    )
-    WallService.update(newPost)
-    WallService.printAll()
+        comment = Comment(
+            0,
+            23,
+            23121999,
+            "Let's walk together!",
+            arrayOf(
+                PhotoAttachment(Photo(234,23,"link for photo"))
+            )))
+    WallService.printAllPosts()
+    WallService.printAllComments()
 }
