@@ -16,41 +16,41 @@
 
 <span class="pc" id="L17">data class Sticker(val id: Int, val ownerId: Int, val url: String)</span>
 <span class="pc" id="L18">data class StickerAttachment(val sticker: Sticker) : Attachment(&quot;sticker&quot;)</span>
-<span class="nc" id="L19">data class Post(</span>
-<span class="nc" id="L20">    val id: Int,</span>
-<span class="nc" id="L21">    val ownerId: Int,</span>
-<span class="nc" id="L22">    val fromId: Int,</span>
-<span class="nc" id="L23">    val publisherId: Int,</span>
-<span class="nc" id="L24">    val publishDate: Long,</span>
-<span class="nc" id="L25">    val replyPostId: Int?,</span>
-<span class="nc" id="L26">    val replyOwnerId: Int?,</span>
-<span class="nc" id="L27">    val copyright: Copyright?,</span>
-<span class="nc" id="L28">    val postType: String,</span>
-<span class="nc" id="L29">    val postSource: Any?,</span>
-<span class="nc" id="L30">    val signerId: Int?,</span>
-<span class="nc" id="L31">    val canPin: Boolean,</span>
-<span class="nc" id="L32">    val canDelete: Boolean,</span>
-<span class="nc" id="L33">    val canEdit: Boolean,</span>
-<span class="nc" id="L34">    val isPinned: Boolean,</span>
-<span class="nc" id="L35">    val markedAsAds: Boolean,</span>
-<span class="nc" id="L36">    val isFavorite: Boolean,</span>
-<span class="nc" id="L37">    val postponed: Boolean,</span>
-<span class="nc" id="L38">    val friendsOnly: Boolean,</span>
-<span class="nc" id="L39">    val text: String,</span>
-<span class="nc" id="L40">    val views: Int?,</span>
-<span class="nc" id="L41">    val likes: Int?,</span>
-<span class="nc" id="L42">    val reposts: Reposts,</span>
-<span class="nc" id="L43">    var comments: Array&lt;Comment&gt; = emptyArray(),</span>
-<span class="nc" id="L44">    val donut: Donut,</span>
-<span class="nc" id="L45">    val geo: Geo?,</span>
-<span class="nc" id="L46">    val attachments: Array&lt;Attachment&gt; = emptyArray()</span>
+<span class="pc" id="L19">data class Post(</span>
+<span class="fc" id="L20">    val id: Int,</span>
+<span class="pc" id="L21">    val ownerId: Int,</span>
+<span class="pc" id="L22">    val fromId: Int,</span>
+<span class="pc" id="L23">    val publisherId: Int,</span>
+<span class="pc" id="L24">    val publishDate: Long,</span>
+<span class="pc" id="L25">    val replyPostId: Int?,</span>
+<span class="pc" id="L26">    val replyOwnerId: Int?,</span>
+<span class="pc" id="L27">    val copyright: Copyright?,</span>
+<span class="pc" id="L28">    val postType: String,</span>
+<span class="pc" id="L29">    val postSource: Any?,</span>
+<span class="pc" id="L30">    val signerId: Int?,</span>
+<span class="pc" id="L31">    val canPin: Boolean,</span>
+<span class="pc" id="L32">    val canDelete: Boolean,</span>
+<span class="pc" id="L33">    val canEdit: Boolean,</span>
+<span class="pc" id="L34">    val isPinned: Boolean,</span>
+<span class="pc" id="L35">    val markedAsAds: Boolean,</span>
+<span class="pc" id="L36">    val isFavorite: Boolean,</span>
+<span class="pc" id="L37">    val postponed: Boolean,</span>
+<span class="pc" id="L38">    val friendsOnly: Boolean,</span>
+<span class="pc" id="L39">    val text: String,</span>
+<span class="pc" id="L40">    val views: Int?,</span>
+<span class="pc" id="L41">    val likes: Int?,</span>
+<span class="pc" id="L42">    val reposts: Reposts,</span>
+<span class="pc" id="L43">    var comments: Array&lt;Comment&gt; = emptyArray(),</span>
+<span class="pc" id="L44">    val donut: Donut,</span>
+<span class="pc" id="L45">    val geo: Geo?,</span>
+<span class="pc" id="L46">    val attachments: Array&lt;Attachment&gt; = emptyArray()</span>
 <span class="nc" id="L47">)</span>
-<span class="nc" id="L48">data class Comment(</span>
-<span class="nc" id="L49">    val id: Int,</span>
-<span class="nc" id="L50">    val fromId: Int,</span>
-<span class="nc" id="L51">    val date: Int,</span>
-<span class="nc" id="L52">    val text: String,</span>
-<span class="nc" id="L53">    val attachments: Array&lt;Attachment&gt; = emptyArray()</span>
+<span class="pc" id="L48">data class Comment(</span>
+<span class="pc" id="L49">    val id: Int,</span>
+<span class="pc" id="L50">    val fromId: Int,</span>
+<span class="pc" id="L51">    val date: Int,</span>
+<span class="pc" id="L52">    val text: String,</span>
+<span class="pc" id="L53">    val attachments: Array&lt;Attachment&gt; = emptyArray()</span>
 <span class="nc" id="L54">)</span>
 
 <span class="nc" id="L56">data class Copyright(</span>
@@ -73,47 +73,47 @@
 <span class="pc" id="L73">    val userReposted: Boolean</span>
 )
 
-<span class="nc" id="L76">class PostNotFoundException(message:String): RuntimeException(message)</span>
+<span class="fc" id="L76">class PostNotFoundException(message:String): RuntimeException(message)</span>
 
 object WallService {
 
-<span class="nc" id="L80">    private var PostIdCounter = 1</span>
-<span class="nc" id="L81">    private var CommentIdCounter = 1</span>
-<span class="nc" id="L82">    private var posts = emptyArray&lt;Post&gt;()</span>
-<span class="nc" id="L83">    private var comments = emptyArray&lt;Comment&gt;()</span>
+<span class="fc" id="L80">    private var PostIdCounter = 1</span>
+<span class="fc" id="L81">    private var CommentIdCounter = 1</span>
+<span class="fc" id="L82">    private var posts = emptyArray&lt;Post&gt;()</span>
+<span class="fc" id="L83">    private var comments = emptyArray&lt;Comment&gt;()</span>
 
     fun add(post: Post): Post {
-<span class="nc" id="L86">        posts += post.copy(id = PostIdCounter++)</span>
-<span class="nc" id="L87">        return posts.last()</span>
+<span class="fc" id="L86">        posts += post.copy(id = PostIdCounter++)</span>
+<span class="fc" id="L87">        return posts.last()</span>
     }
 
     fun update(updatedPost: Post): Boolean {
-<span class="nc bnc" id="L91" title="All 2 branches missed.">        for ((index, post) in posts.withIndex()) {</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">            if (updatedPost.id == post.id) {</span>
-<span class="nc" id="L93">                posts[index] = updatedPost.copy()</span>
-<span class="nc" id="L94">                return true</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        for ((index, post) in posts.withIndex()) {</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">            if (updatedPost.id == post.id) {</span>
+<span class="fc" id="L93">                posts[index] = updatedPost.copy()</span>
+<span class="fc" id="L94">                return true</span>
             }
         }
-<span class="nc" id="L97">        return false</span>
+<span class="fc" id="L97">        return false</span>
     }
 
     fun createComment(postId: Int, comment: Comment): Comment{
-<span class="nc bnc" id="L101" title="All 2 branches missed.">        for ((index, post) in posts.withIndex()) {</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">            if (postId == post.id) {</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        for ((index, post) in posts.withIndex()) {</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">            if (postId == post.id) {</span>
 <span class="nc" id="L103">                comments += comment.copy(id = CommentIdCounter)</span>
 <span class="nc" id="L104">                posts[index].comments += comment.copy(id = CommentIdCounter++)</span>
 <span class="nc" id="L105">                return comment</span>
             }
         }
-<span class="nc" id="L108">        throw PostNotFoundException(&quot;Post with id $postId not found!&quot;)</span>
+<span class="fc" id="L108">        throw PostNotFoundException(&quot;Post with id $postId not found!&quot;)</span>
     }
 
     fun clear() {
-<span class="nc" id="L112">        posts = emptyArray()</span>
-<span class="nc" id="L113">        comments = emptyArray()</span>
-<span class="nc" id="L114">        PostIdCounter = 1</span>
-<span class="nc" id="L115">        CommentIdCounter = 1</span>
-<span class="nc" id="L116">    }</span>
+<span class="fc" id="L112">        posts = emptyArray()</span>
+<span class="fc" id="L113">        comments = emptyArray()</span>
+<span class="fc" id="L114">        PostIdCounter = 1</span>
+<span class="fc" id="L115">        CommentIdCounter = 1</span>
+<span class="fc" id="L116">    }</span>
 
     fun printAllPosts() {
 <span class="nc bnc" id="L119" title="All 2 branches missed.">        for (post in posts) {</span>

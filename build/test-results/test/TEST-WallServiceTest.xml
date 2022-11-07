@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="WallServiceTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2022-11-07T16:55:15" hostname="DESKTOP-1M1A4OM" time="0.516">
+<testsuite name="WallServiceTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2022-11-07T18:04:22" hostname="DESKTOP-1M1A4OM" time="0.655">
   <properties/>
-  <testcase name="add_IdChanged" classname="WallServiceTest" time="0.512"/>
-  <testcase name="update_PostExist" classname="WallServiceTest" time="0.001"/>
+  <testcase name="add_IdChanged" classname="WallServiceTest" time="0.644"/>
+  <testcase name="update_PostExist" classname="WallServiceTest" time="0.0"/>
+  <testcase name="createComment_ShouldThrow" classname="WallServiceTest" time="0.005"/>
   <testcase name="update_PostDoNotExist" classname="WallServiceTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
